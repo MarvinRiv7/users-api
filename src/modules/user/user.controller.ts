@@ -1,43 +1,34 @@
 import { Request, Response } from 'express';
 import { Usuario } from './user.models';
-import { validationResult } from 'express-validator';
 import { hashPasword } from '../../utils/bcryptjs';
+import { resolveNaptr } from 'dns/promises';
 
-export const usuariosGet = (req: Request, res: Response) => {
-  const params = req.query;
+export const usuariosGet = async (req: Request, res: Response) => {
+  // const params = req.query;
+  const { limite = 5, desde = 0 } = req.query;
+  const query = { estado: true };
+
+  const [total, usuarios] = await Promise.all([
+    Usuario.countDocuments(query),
+    Usuario.find(query).skip(Number(desde)).limit(Number(limite)),
+  ]);
 
   res.json({
-    ok: true,
-    msg: 'get Api - controlador',
+    total,
+    usuarios
   });
 };
 
 export const usuariosPost = async (req: Request, res: Response) => {
-  const errors = validationResult(req);
-  if (!errors.isEmpty()) {
-    res.status(400).json({
-      ok: false,
-      errors,
-    });
-  }
   try {
     const { nombre, correo, password, edad, rol } = req.body;
     const usuario = new Usuario({ nombre, correo, password, edad, rol });
-    //verificar si el correo existe
-    const existeEmail = await Usuario.findOne({ correo });
-    if (existeEmail) {
-      res.status(400).json({
-        ok: false,
-        msg: 'El correo ya está registrado',
-      });
-    }
     //Encriptar la contraseña
     usuario.password = hashPasword(password);
     //Guardar en DB
     await usuario.save();
     res.status(201).json({
       ok: true,
-      msg: 'post Api - controlador',
       usuario,
     });
   } catch (error) {
@@ -47,13 +38,18 @@ export const usuariosPost = async (req: Request, res: Response) => {
   }
 };
 
-export const usuariosPut = (req: Request, res: Response) => {
+export const usuariosPut = async (req: Request, res: Response) => {
   const { id } = req.params;
+  const { _id, password, google, ...resto } = req.body;
+  //TODO validar contra base de datos
+  if (password) {
+    resto.password = hashPasword(password);
+  }
+  const usuario = await Usuario.findByIdAndUpdate(id, resto);
 
-  res.status(400).json({
+  res.json({
     ok: true,
-    msg: 'put Api - controlador',
-    id,
+    usuario,
   });
 };
 
@@ -64,9 +60,18 @@ export const usuariosPatch = (req: Request, res: Response) => {
   });
 };
 
-export const usuariosDelete = (req: Request, res: Response) => {
+export const usuariosDelete = async (req: Request, res: Response) => {
+
+  const {id} = req.params
+
+  //Borrar fisicamente al usuario
+  // const usuario = await Usuario.findByIdAndDelete(id)
+
+  //Borrar cambiando el estado
+  const usuario = await Usuario.findByIdAndUpdate(id, {estado: false})
+
   res.json({
     ok: true,
-    msg: 'delete Api - controlador',
+    usuario
   });
 };
