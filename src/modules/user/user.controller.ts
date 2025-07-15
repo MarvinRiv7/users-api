@@ -15,7 +15,7 @@ export const usuariosGet = async (req: Request, res: Response) => {
 
   res.json({
     total,
-    usuarios
+    usuarios,
   });
 };
 
@@ -61,17 +61,13 @@ export const usuariosPatch = (req: Request, res: Response) => {
 };
 
 export const usuariosDelete = async (req: Request, res: Response) => {
+  const { id } = req.params;
 
-  const {id} = req.params
-
-  //Borrar fisicamente al usuario
-  // const usuario = await Usuario.findByIdAndDelete(id)
-
-  //Borrar cambiando el estado
-  const usuario = await Usuario.findByIdAndUpdate(id, {estado: false})
+  // Eliminar lógicamente al usuario
+  const usuario = await Usuario.findByIdAndUpdate(id, { estado: false });
 
   res.json({
     ok: true,
-    usuario
+    usuario,
   });
 };

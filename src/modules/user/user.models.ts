@@ -42,13 +42,14 @@ const UsuarioSChema = new Schema<IUsuario>({
     default: true,
   },
   google: {
-    type: Boolean,
+    type: Boolean,  
     default: false,
   },
 });
 
 UsuarioSChema.methods.toJSON = function() {
-  const {__v, password, ...usuario} = this.toObject();
+  const {__v, _id, password, ...usuario} = this.toObject();
+  usuario.uid = _id;
   return usuario;
 }
 

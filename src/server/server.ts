@@ -1,7 +1,8 @@
 import express, { Application } from 'express';
 import cors from 'cors';
 import { dbConnection } from '../database/config';
-import moduleRoutes from '../modules/modules.routes';
+import usersRoutes from '../modules/modules.routes';
+import authRoutes from '../modules/auth/auth.routes';
 
 class Server {
   private app: Application;
@@ -33,7 +34,8 @@ class Server {
   }
 
   routes() {
-    this.app.use('/api', moduleRoutes);
+    this.app.use('/api', usersRoutes);
+    this.app.use('/api', authRoutes);
   }
 
   listen() {
