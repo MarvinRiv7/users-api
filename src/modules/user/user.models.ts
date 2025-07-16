@@ -2,7 +2,7 @@ import { Document, model, Schema } from 'mongoose';
 
 export interface IUsuario extends Document {
   nombre: string;
-  edad: number;
+  edad?: number;
   correo: string;
   password: string;
   img?: string;
@@ -18,7 +18,7 @@ const UsuarioSChema = new Schema<IUsuario>({
   },
   edad: {
     type: Number,
-    required: [true, 'La edad es obligatoria'],
+    required: false
   },
   correo: {
     type: String,

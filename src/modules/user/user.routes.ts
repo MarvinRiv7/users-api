@@ -12,7 +12,7 @@ import {
   emailExiste,
   esRoleValido,
   existeUsuarioPorId,
-} from '../../utils/db-validators';
+} from '../../helpers/db-validators';
 import { validarJwT } from '../../middlewares/validar-jwt';
 import { esAdminRole, tieneRole } from '../../middlewares/validar-roles';
 

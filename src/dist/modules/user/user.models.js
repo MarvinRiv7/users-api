@@ -20,7 +20,7 @@ const UsuarioSChema = new mongoose_1.Schema({
     },
     edad: {
         type: Number,
-        required: [true, 'La edad es obligatoria'],
+        required: false
     },
     correo: {
         type: String,
