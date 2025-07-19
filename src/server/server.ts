@@ -2,7 +2,10 @@ import express, { Application } from 'express';
 import cors from 'cors';
 import { dbConnection } from '../database/config';
 import usersRoutes from '../modules/modules.routes';
-import authRoutes from '../modules/auth/auth.routes';
+import authRoutes from '../modules/modules.routes';
+import categoriesRoutes from '../modules/modules.routes';
+import productsRoutes from '../modules/modules.routes';
+import searchRoutes from '../modules/modules.routes';
 
 class Server {
   private app: Application;
@@ -36,11 +39,14 @@ class Server {
   routes() {
     this.app.use('/api', usersRoutes);
     this.app.use('/api', authRoutes);
+    this.app.use('/api', categoriesRoutes);
+    this.app.use('/api', productsRoutes);
+    this.app.use('/api', searchRoutes);
   }
 
   listen() {
     this.app.listen(this.port, () => {
-      console.log(`Servidor corriendo en puertoo ${this.port}`);
+      console.log(`Servidor corriendo en puerto ${this.port}`);
     });
   }
 }

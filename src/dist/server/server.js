@@ -16,7 +16,8 @@ const express_1 = __importDefault(require("express"));
 const cors_1 = __importDefault(require("cors"));
 const config_1 = require("../database/config");
 const modules_routes_1 = __importDefault(require("../modules/modules.routes"));
-const auth_routes_1 = __importDefault(require("../modules/auth/auth.routes"));
+const modules_routes_2 = __importDefault(require("../modules/modules.routes"));
+const modules_routes_3 = __importDefault(require("../modules/modules.routes"));
 class Server {
     constructor() {
         this.app = (0, express_1.default)();
@@ -43,7 +44,8 @@ class Server {
     }
     routes() {
         this.app.use('/api', modules_routes_1.default);
-        this.app.use('/api', auth_routes_1.default);
+        this.app.use('/api', modules_routes_2.default);
+        this.app.use('/api', modules_routes_3.default);
     }
     listen() {
         this.app.listen(this.port, () => {

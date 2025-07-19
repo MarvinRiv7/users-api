@@ -9,7 +9,8 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.existeUsuarioPorId = exports.emailExiste = exports.esRoleValido = void 0;
+exports.existeCategoriaPorID = exports.existeUsuarioPorId = exports.emailExiste = exports.esRoleValido = void 0;
+const categories_models_1 = require("../modules/categories/categories.models");
 const role_models_1 = require("../modules/user/role.models");
 const user_models_1 = require("../modules/user/user.models");
 const esRoleValido = (rol) => __awaiter(void 0, void 0, void 0, function* () {
@@ -35,4 +36,11 @@ const existeUsuarioPorId = (id) => __awaiter(void 0, void 0, void 0, function* (
     }
 });
 exports.existeUsuarioPorId = existeUsuarioPorId;
+const existeCategoriaPorID = (id) => __awaiter(void 0, void 0, void 0, function* () {
+    const existeCategoria = yield categories_models_1.Categories.findById(id);
+    if (!existeCategoria) {
+        throw new Error(`El id: ${id} no existe`);
+    }
+});
+exports.existeCategoriaPorID = existeCategoriaPorID;
 //# sourceMappingURL=db-validators.js.map
