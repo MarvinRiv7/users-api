@@ -4,9 +4,8 @@ import { isValidObjectId } from 'mongoose';
 import { Usuario } from '../user/user.models';
 import { Categories } from '../categories/categories.models';
 import { Products } from '../products/products.models';
-import { buscarUsuarios } from '../../utils/buscarUsuarios';
-import { buscarCategorias } from '../../utils/buscarCategorias';
-import { buscarProductos } from '../../utils/buscarProductos';
+import { buscarCategorias, buscarProductos, buscarUsuarios } from '../../utils';
+
 
 const coleccionesPermitidas = ['usuarios', 'categorias', 'productos', 'roles'];
 

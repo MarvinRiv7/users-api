@@ -4,6 +4,7 @@ import 'dotenv/config';
 export const env: Env = {
   PORT: Number(process.env.PORT || 8081),
   MONGO_CNN: process.env.MONGO_CNN || '',
-  SECRETKEYJWT: process.env.SECRETKEYJWT || ''
+  SECRETKEYJWT: process.env.SECRETKEYJWT || '',
+  CLOUDINARY_URL: process.env.CLOUDINARY_URL ?? ''
 };
 

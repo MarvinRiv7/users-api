@@ -7,7 +7,8 @@ export interface IUProducts extends Document {
   categoria: Types.ObjectId;
   precio: number;
   descripcion: string;
-  disponible: boolean
+  disponible: boolean,
+  img: string
 }
 
 const ProductsSchema = new Schema<IUProducts>({
@@ -41,7 +42,8 @@ const ProductsSchema = new Schema<IUProducts>({
   disponible: {
     type: Boolean,
     default: true
-  }
+  },
+  img: {type: String}
 });
 
 ProductsSchema.methods.toJSON = function () {

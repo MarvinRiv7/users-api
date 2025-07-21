@@ -40,3 +40,13 @@ export const existeProductoPorID = async (id: string) => {
   }
 };
 
+export const coleccionesPermitidas = (coleccion: string = '', colecciones: string[]) => {
+
+  const incluida = colecciones.includes(coleccion)
+  if(!incluida) {
+    throw new Error(`La coleccion ${coleccion} no es permitida, ${colecciones}`)
+  }
+  return true
+
+}
+

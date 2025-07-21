@@ -1,4 +1,5 @@
 import express, { Application } from 'express';
+import fileUpload  from "express-fileupload";
 import cors from 'cors';
 import { dbConnection } from '../database/config';
 import usersRoutes from '../modules/modules.routes';
@@ -6,6 +7,7 @@ import authRoutes from '../modules/modules.routes';
 import categoriesRoutes from '../modules/modules.routes';
 import productsRoutes from '../modules/modules.routes';
 import searchRoutes from '../modules/modules.routes';
+import uploadsRoutes from '../modules/modules.routes';
 
 class Server {
   private app: Application;
@@ -34,6 +36,11 @@ class Server {
     this.app.use(express.json());
     //Directorio Publico
     this.app.use(express.static('public'));
+
+    this.app.use(fileUpload({
+    useTempFiles : true,
+    tempFileDir : '/tmp/',
+}));
   }
 
   routes() {
@@ -42,6 +49,7 @@ class Server {
     this.app.use('/api', categoriesRoutes);
     this.app.use('/api', productsRoutes);
     this.app.use('/api', searchRoutes);
+    this.app.use('/api', uploadsRoutes);
   }
 
   listen() {
